@@ -62,19 +62,21 @@
   )
 (centered-pyramid "x" 4)
 
-;;Question 3
+;;Question 3 
 (define (lst-alphabetized? myList)
-  (letrec ([helper (lambda (myList [prevItem (first myList)] [alpha #t])
+  (define alpha #t)
+  (letrec ([helper (lambda (myList [prevItem (first myList)] [alphabet alpha])
                      (cond
-                       [(false? alpha)
-                        #f]
+                       [(false? alphabet)
+                        (set! alpha #f)]
                        [(empty? myList)
-                        #t]
+                        (void)]
                        [(if (string>=? (first myList) prevItem)
                             (helper (rest myList) (first myList) #t)
-                            (helper (rest myList) (first myList) #f))]
-                       ))])
+                            (helper `() "" #f))])
+                     alpha)])
     (helper myList)
     ))
 ;;(lst-alphabetized? (list "apple" "banana" "carrot"))
+(lst-alphabetized? (list "apple" "banana" "carrot"))
 (lst-alphabetized? (list "zebra" "yak" "xenomorph"))
